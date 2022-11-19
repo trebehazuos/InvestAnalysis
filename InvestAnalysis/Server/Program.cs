@@ -1,4 +1,7 @@
+using InvestAnalysis.Server.Data;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
+builder.Services.AddDbContext<Db>
+    (options => options.UseMySql(
+        "server=localhost;initial catalog=Test;uid=root;pwd=zondas",
+        Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.31-mysql")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
